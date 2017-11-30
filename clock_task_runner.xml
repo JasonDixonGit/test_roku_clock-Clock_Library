@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="clock_task_runner" extends="Task" >
+
+  <interface>
+    <field id = "time" type = "string" />
+  </interface> 
+
+<script type="text/brightscript" >
+  <![CDATA[
+sub init()
+    m.top.functionName = "TickTock"
+end sub
+
+sub TickTock()
+    while(true)
+        time = createObject("roDateTime")
+        time.toLocalTime()
+        strTime = formatTime(time)
+        m.top.time = strTime
+        sleep(1000)   
+    end while
+end sub
+
+Function formatTime(time)
+        
+        AmPm = "AM"
+        hours = "0"
+        minutes = "0"
+        seconds = "0"
+        
+        if(time.getHours() >= 12) then
+           AmPm = "PM"
+        end if
+        
+        if(time.getHours() < 10) then
+            hours = "0" + time.getHours().ToStr()
+        else
+            if(time.getHours() > 12) then
+                adjustedHours = time.getHours() - 12
+                hours = adjustedHours.ToStr()
+            else
+                hours = time.getHours().ToStr()
+            end if
+        end if
+        
+        if(time.getMinutes() < 10) then
+            minutes = "0" + time.getMinutes().ToStr() 
+        else
+            minutes = time.getMinutes().ToStr()
+        end if
+        
+        if(time.getSeconds() < 10) then
+            seconds = "0" + time.getSeconds().ToStr()
+        else
+            seconds = time.getSeconds().ToStr()
+        end if
+        
+        return hours + ":" + minutes + ":" + seconds + " " + AmPm
+end Function
+]]>
+</script>
+</component>

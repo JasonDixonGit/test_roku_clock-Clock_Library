@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<component name="clock" extends="Group" >
+	
+	<interface>
+		<field id="time" type="string" />
+		<field id="displayTime" type="string" alias="clock.text" />
+	</interface>
+	
+<script type="text/brightscript" >
+<![CDATA[
+	Sub Init()
+	    m.time        = m.top.findNode("time")
+	    m.displayTime = m.top.findNode("displayTime")
+	    m.top.time = "00:00"
+	    startClock()
+	End Sub
+
+	sub startClock()
+	    m.getTimeTask = createObject("roSGNode","clock_task_runner")
+	    m.getTimeTask.observeField("time","UpdateClock")
+	    m.getTimeTask.control = "RUN"
+	end sub
+
+	Sub UpdateClock()
+	    m.top.displayTime = m.getTimeTask.time
+	end sub
+]]>
+</script>
+
+<children>
+
+	        <Rectangle
+	            id="background"
+	            translation="[490, 270]"
+	            color="0x000000FF"
+	            width="300"
+	            height="100"
+	            opacity=".8"
+	        />
+        
+          <Label
+              id="clock"
+              text="00:00"
+              width="1280"
+              height="200"
+              horizAlign="center"
+              translation="[0, 300]"
+              font="font:LargeSystemFont"/>
+                       
+</children>
+</component>
